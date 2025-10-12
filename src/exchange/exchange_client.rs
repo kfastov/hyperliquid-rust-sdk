@@ -26,8 +26,7 @@ use crate::{
     prelude::*,
     req::HttpClient,
     signature::{sign_l1_action, sign_typed_data},
-    BaseUrl, BulkCancelCloid, Error, ExchangeResponseStatus, SpotSend, VaultTransfer,
-    Withdraw3,
+    BaseUrl, BulkCancelCloid, Error, ExchangeResponseStatus, SpotSend, VaultTransfer, Withdraw3,
 };
 
 #[derive(Debug)]
