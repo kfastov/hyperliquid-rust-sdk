@@ -287,6 +287,41 @@ pub struct WebData2Data {
 
 #[derive(Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
+pub struct WebData3Data {
+    pub user_state: UserState,
+    pub perp_dex_states: Vec<PerpDexState>,
+}
+
+#[derive(Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct PerpDexState {
+    pub total_vault_equity: f64,
+    pub perps_at_open_interest_cap: Option<Vec<String>>,
+    pub leading_vaults: Option<Vec<LeadingVault>>,
+}
+
+#[derive(Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct LeadingVault {
+    pub address: Address,
+    pub name: String,
+}
+
+#[derive(Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
+pub struct UserState {
+    pub agent_address: Option<Address>,
+    pub agent_valid_until: Option<u64>,
+    pub server_time: u64,
+    pub cum_ledger: f64,
+    pub is_vault: bool,
+    pub user: Address,
+    pub opt_out_of_spot_dusting: Option<bool>,
+    pub dex_abstraction_enabled: Option<bool>,
+}
+
+#[derive(Deserialize, Clone, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct ActiveAssetCtxData {
     pub coin: String,
     pub ctx: AssetCtx,

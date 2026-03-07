@@ -58,6 +58,11 @@ pub struct WebData2 {
 }
 
 #[derive(Deserialize, Clone, Debug)]
+pub struct WebData3 {
+    pub data: WebData3Data,
+}
+
+#[derive(Deserialize, Clone, Debug)]
 pub struct ActiveAssetCtx {
     pub data: ActiveAssetCtxData,
 }

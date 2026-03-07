@@ -59,6 +59,9 @@ pub enum InfoRequest {
     SpotMeta,
     SpotMetaAndAssetCtxs,
     AllMids,
+    PerpsAtOpenInterestCap {
+        dex: Option<String>,
+    },
     UserFills {
         user: Address,
     },
@@ -229,6 +232,11 @@ impl InfoClient {
 
     pub async fn all_mids(&self) -> Result<HashMap<String, String>> {
         let input = InfoRequest::AllMids;
+        self.send_info_request(input).await
+    }
+
+    pub async fn perps_at_open_interest_cap(&self, dex: Option<String>) -> Result<Vec<String>> {
+        let input = InfoRequest::PerpsAtOpenInterestCap { dex };
         self.send_info_request(input).await
     }
 
