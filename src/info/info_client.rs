@@ -60,6 +60,7 @@ pub enum InfoRequest {
     SpotMetaAndAssetCtxs,
     AllMids,
     PerpsAtOpenInterestCap {
+        #[serde(skip_serializing_if = "Option::is_none")]
         dex: Option<String>,
     },
     UserFills {
@@ -327,5 +328,24 @@ impl InfoClient {
     ) -> Result<ActiveAssetDataResponse> {
         let input = InfoRequest::ActiveAssetData { user, coin };
         self.send_info_request(input).await
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn perps_at_oi_cap_without_dex_omits_field() {
+        let req = InfoRequest::PerpsAtOpenInterestCap { dex: None };
+        let json = serde_json::to_string(&req).unwrap();
+        assert_eq!(json, r#"{"type":"perpsAtOpenInterestCap"}"#);
+    }
+
+    #[test]
+    fn perps_at_oi_cap_with_dex_includes_field() {
+        let req = InfoRequest::PerpsAtOpenInterestCap { dex: Some("PerpsTestnet".into()) };
+        let json = serde_json::to_string(&req).unwrap();
+        assert_eq!(json, r#"{"type":"perpsAtOpenInterestCap","dex":"PerpsTestnet"}"#);
     }
 }
